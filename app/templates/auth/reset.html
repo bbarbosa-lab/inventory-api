@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Nova senha{% endblock %}
+{% block content %}
+<section class="auth-card">
+  <h1>Definir nova senha</h1>
+  <form id="reset-form">
+    <input type="hidden" name="token" value="{{ token }}">
+    <label>Nova senha <input type="password" name="new_password" minlength="12" required></label>
+    <button type="submit" class="btn primary">Salvar</button>
+  </form>
+  <p id="msg" class="msg"></p>
+</section>
+<script>
+document.getElementById('reset-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const res = await fetch('/api/auth/password-reset/confirm', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({token: fd.get('token'), new_password: fd.get('new_password')})
+  });
+  const data = await res.json();
+  document.getElementById('msg').textContent = data.detail || JSON.stringify(data);
+  if (res.ok) setTimeout(() => location.href = '/login', 1200);
+});
+</script>
+{% endblock %}

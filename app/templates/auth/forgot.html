@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Recuperar senha{% endblock %}
+{% block content %}
+<section class="auth-card">
+  <h1>Recuperar senha</h1>
+  <form id="forgot-form">
+    <label>Email <input type="email" name="email" required></label>
+    <button type="submit" class="btn primary">Enviar</button>
+  </form>
+  <p id="msg" class="msg"></p>
+</section>
+<script>
+document.getElementById('forgot-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const res = await fetch('/api/auth/password-reset/request', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({email: fd.get('email')})
+  });
+  const data = await res.json();
+  document.getElementById('msg').textContent = data.detail || JSON.stringify(data);
+});
+</script>
+{% endblock %}

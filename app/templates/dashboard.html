@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<section>
+  <h1>Olá, {{ user.display_name }}</h1>
+  <p class="muted">Seus itens mais recentes (via API REST). Use <a href="/docs">/docs</a> para explorar todos os endpoints.</p>
+
+  <div class="card">
+    <h2>Itens</h2>
+    {% if items %}
+    <table>
+      <thead><tr><th>ID</th><th>Nome</th><th>Status</th><th>Qtd</th></tr></thead>
+      <tbody>
+      {% for i in items %}
+        <tr>
+          <td>{{ i.id }}</td>
+          <td>{{ i.name }}</td>
+          <td>{{ i.status }}</td>
+          <td>{{ i.quantity }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p>Nenhum item ainda. Use a API (<code>POST /api/items</code>) para criar.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

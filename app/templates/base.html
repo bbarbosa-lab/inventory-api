@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Inventory API{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/app.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <a href="/" class="logo">Inventory API</a>
+      <nav>
+        {% if user %}
+          <a href="/dashboard">Dashboard</a>
+          <a href="/docs">API Docs</a>
+          <form action="/api/auth/logout" method="post" style="display:inline">
+            <button type="submit" class="btn-link">Sair</button>
+          </form>
+        {% else %}
+          <a href="/login">Login</a>
+          <a href="/register">Registrar</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="footer">
+    <div class="container">Educational REST API project — FastAPI + PostgreSQL</div>
+  </footer>
+</body>
+</html>
